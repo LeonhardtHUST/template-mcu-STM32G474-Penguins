@@ -1,0 +1,7 @@
+load STM32G474VETx
+SetStructure Advanced
+project name stm32-g474-template
+project toolchain Makefile
+project path __PROJECT_DIR__
+project generate
+exit

@@ -1,0 +1,4 @@
+config load stm32-g474-template.ioc
+SetStructure Advanced
+project generate
+exit
