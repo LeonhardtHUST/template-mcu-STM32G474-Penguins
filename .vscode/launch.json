@@ -1,0 +1,54 @@
+// Cortex-Debug 配置（OpenOCD 后端）。
+// 默认 ST-Link/SWD；改用 CMSIS-DAP 时把两个 configFiles 换成
+// scripts/openocd-cmsis-dap.cfg，并同步 platformio.ini 的 upload_protocol/debug_tool。
+// PlatformIO IDE 可能自动追加 "PIO Debug" 系列配置，那些由扩展维护，不要手改。
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug (OpenOCD / ST-Link)",
+      "type": "cortex-debug",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/.pio/build/genericSTM32G474VE/firmware.elf",
+      "device": "STM32G474VE",
+      "servertype": "openocd",
+      "serverpath": "${env:HOME}/.platformio/packages/tool-openocd/bin/openocd",
+      "configFiles": ["${workspaceFolder}/scripts/openocd-stlink.cfg"],
+      "svdFile": "${env:HOME}/.platformio/platforms/ststm32/misc/svd/STM32G474xx.svd",
+      "runToEntryPoint": "main",
+      "preLaunchTask": {
+        "type": "PlatformIO",
+        "task": "Pre-Debug"
+      },
+      "armToolchainPath": "${env:HOME}/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+      "searchDir": ["${env:HOME}/.platformio/packages/tool-openocd/openocd/scripts"],
+      "windows": {
+        "serverpath": "${env:USERPROFILE}/.platformio/packages/tool-openocd/bin/openocd.exe",
+        "armToolchainPath": "${env:USERPROFILE}/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+        "searchDir": ["${env:USERPROFILE}/.platformio/packages/tool-openocd/openocd/scripts"],
+        "svdFile": "${env:USERPROFILE}/.platformio/platforms/ststm32/misc/svd/STM32G474xx.svd"
+      }
+    },
+    {
+      "name": "Attach (OpenOCD / ST-Link)",
+      "type": "cortex-debug",
+      "request": "attach",
+      "cwd": "${workspaceFolder}",
+      "executable": "${workspaceFolder}/.pio/build/genericSTM32G474VE/firmware.elf",
+      "device": "STM32G474VE",
+      "servertype": "openocd",
+      "serverpath": "${env:HOME}/.platformio/packages/tool-openocd/bin/openocd",
+      "configFiles": ["${workspaceFolder}/scripts/openocd-stlink.cfg"],
+      "svdFile": "${env:HOME}/.platformio/platforms/ststm32/misc/svd/STM32G474xx.svd",
+      "armToolchainPath": "${env:HOME}/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+      "searchDir": ["${env:HOME}/.platformio/packages/tool-openocd/openocd/scripts"],
+      "windows": {
+        "serverpath": "${env:USERPROFILE}/.platformio/packages/tool-openocd/bin/openocd.exe",
+        "armToolchainPath": "${env:USERPROFILE}/.platformio/packages/toolchain-gccarmnoneeabi/bin",
+        "searchDir": ["${env:USERPROFILE}/.platformio/packages/tool-openocd/openocd/scripts"],
+        "svdFile": "${env:USERPROFILE}/.platformio/platforms/ststm32/misc/svd/STM32G474xx.svd"
+      }
+    }
+  ]
+}

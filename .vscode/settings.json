@@ -1,0 +1,36 @@
+{
+  // 让 PlatformIO IDE 接管 C/C++ 智能感知配置（自动生成 c_cpp_properties.json）
+  "platformio-ide.autoRebuildAutocompleteIndex": true,
+  "platformio-ide.activateOnlyOnPlatformIOProject": false,
+
+  // 默认安装的 PlatformIO Core 优先于旧 PATH 中可能失效的 pio shim。
+  // 修改后新开集成终端；自定义 Core 目录时同步调整此处。
+  "terminal.integrated.env.windows": {
+    "PATH": "${env:USERPROFILE}\\.platformio\\penv\\Scripts;${env:PATH}"
+  },
+
+  // 文件树/搜索：隐藏构建产物，避免 CubeMX 库与 framework 库重复跳转
+  "files.exclude": {
+    "**/.pio": true
+  },
+  "search.exclude": {
+    "**/.pio": true,
+    "Drivers": true,
+    "startup": true
+  },
+
+  // .ioc 本质为 ini 格式，按 ini 高亮
+  "files.associations": {
+    "*.ioc": "ini",
+    "*.ld": "linker-script"
+  },
+
+  // 注意：打开时会把 Core/ 下的 CubeMX 生成代码整体重排，产生与本次改动无关的 diff。
+  // 处理 Core/** 时建议临时关掉（见 TEMPLATE-PLACEHOLDERS.md 的 D1）。
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+
+  "[c]": { "editor.defaultFormatter": "ms-vscode.cpptools" },
+  "[cpp]": { "editor.defaultFormatter": "ms-vscode.cpptools" }
+}

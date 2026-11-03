@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      // 本机 CubeMX 装在 C:\ST\STM32CubeMX（不在默认的 Program Files 目录）。
+      // 换机器时改这里，见 TEMPLATE-PLACEHOLDERS.md 的 B4。
+      "label": "STM32CubeMX: Open .ioc",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeMX\\STM32CubeMX.exe",
+        "args": ["${workspaceFolder}\\stm32-g474-template.ioc"]
+      },
+      "linux": {
+        "command": "STM32CubeMX",
+        "args": ["${workspaceFolder}/stm32-g474-template.ioc"]
+      },
+      "presentation": { "reveal": "silent" },
+      "problemMatcher": []
+    },
+    {
+      // 无头生成 Core/ 代码；工作目录必须是项目根目录（脚本用相对路径加载 .ioc）
+      "label": "STM32CubeMX: Generate Code (CLI)",
+      "type": "shell",
+      "windows": {
+        "command": "C:\\ST\\STM32CubeMX\\jre\\bin\\java.exe",
+        "args": [
+          "-jar",
+          "C:\\ST\\STM32CubeMX\\STM32CubeMX.exe",
+          "-q",
+          "${workspaceFolder}\\scripts\\cubemx-generate.mx"
+        ]
+      },
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "PlatformIO: Build",
+      "type": "PlatformIO",
+      "task": "Build",
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true }
+    },
+    {
+      "label": "PlatformIO: Upload",
+      "type": "PlatformIO",
+      "task": "Upload",
+      "problemMatcher": ["$gcc"]
+    },
+    {
+      "label": "PlatformIO: Clean",
+      "type": "PlatformIO",
+      "task": "Clean",
+      "problemMatcher": []
+    }
+  ]
+}
