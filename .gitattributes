@@ -1,2 +1,24 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# 行尾策略（Git line-ending policy）
+#
+# Git 入库与 checkout 统一 LF，编辑器遵循同一策略。
+# CubeMX 在 Windows 下仍可能写回 CRLF；text 属性在 add/status/diff 时归一化，
+# 不会仅因 LF/CRLF 的差别产生内容 diff。工作区并非时刻保持 LF。
+# 不按 Core/Inc/*.h 强制 CRLF，避免派生工程新增手写头文件后维护例外清单。
+# 二进制例外必须放在通用规则之后；Intel HEX 保持原始字节，不在此迁移哈希。
+#
+# 核验：对同一已入库文本分别以 LF/CRLF 落盘，git diff 应均为空；
+# git ls-files --eol 可区分 index 与工作区行尾。不要为生成文件恢复 eol=crlf。
+
+* text=auto eol=lf
+
+# ---- 二进制：不做任何转换 ----
+*.hex   binary
+*.bin   binary
+*.elf   binary
+*.o     binary
+*.a     binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.zip   binary

@@ -1,0 +1,27 @@
+# 供编辑器与 agent 统一风格；与 .gitattributes 的行尾策略保持一致。
+# https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{c,h}]
+indent_style = space
+indent_size = 2
+
+[platformio.ini]
+indent_style = tab
+
+[*.{json,md,yml,yaml,ioc,mx,cfg}]
+indent_style = space
+indent_size = 2
+
+# CubeMX 写回的 CRLF 由 Git 归一化；保留 .ioc 的尾随空格，避免内容 diff。
+[*.ioc]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

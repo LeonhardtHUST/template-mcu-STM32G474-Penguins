@@ -1,0 +1,78 @@
+# STM32CubeIDE / CubeMX build artifacts
+Debug/
+Release/
+build/
+*.o
+*.d
+*.su
+*.elf
+*.hex
+*.bin
+*.map
+
+# IDE metadata
+.settings/
+*.launch
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.clang_complete
+.gcc-flags.json
+
+# STM32CubeMX 生成的库 / Makefile / 启动文件 / 链接脚本 / 备份
+# HAL、CMSIS、启动文件、链接脚本由 PlatformIO framework 与 tool-ldscripts 提供，故不提交：
+Drivers/**
+!Drivers/**/.gitkeep
+Makefile
+STM32G474xx_FLASH.ld
+startup_stm32g474xx.s
+*.ioc.bak
+*.ioc.bak.*
+
+# 注意：.mxproject 是 CubeMX 的「上次生成记录」，**刻意保留在版本库中**：
+# 其内部路径为相对路径（可跨机器），且外设集合变化时会产生可审阅的 diff。
+# 不要把它加进忽略列表。
+.workbuddy/
+
+# Keil MDK / IAR 产物（本板教程工程用 Keil，交叉检查时会用到）
+Objects/
+Listings/
+*.uvguix.*
+*.uvprojx
+*.uvoptx
+*.uvopt
+*.dep
+*.crf
+*.lnp
+JLinkLog.txt
+settings/
+
+# 通用备份 / 临时文件
+*.bak
+*.orig
+*.rej
+*~
+*.tmp
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 显式保留交付目录；先解除父目录忽略，再允许选定构建产物入库。
+# Windows 上 Release/ 可能同时匹配 release/，所以不能只写文件例外。
+!/release/
+!/release/*.hex
+!/release/*.elf
+!/release/*.map
+
+# PlatformIO 自动生成，包含本机绝对路径。
+/.vscode/c_cpp_properties.json
+
+# CubeMX 无头生成的临时目录。
+/after/
+
+# Agent 会话与本地缓存；共享设计文档应放在 docs/。
+.codebuddy/
