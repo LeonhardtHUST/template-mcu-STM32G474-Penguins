@@ -49,7 +49,7 @@
 | D3 | `.ioc` 内的参数白名单 | 每个外设有一行 `<IP>.IPParameters=a,b,c`，每个引脚有一行 `<Pin>.GPIOParameters=...`，只有列在这里的 key 才被识别 | 手改 `.ioc` 加参数时，**必须同步补进对应白名单行**，否则 CubeMX 静默忽略。本次 `PC13` 的 `PinState` 就是靠 `PC13.GPIOParameters=PinState` 生效的 |
 | D4 | 信号名是 `S_` 前缀的枚举 | 例如 PA0 上 TIM2 通道 1 的**正确**写法是 `S_TIM2_CH1_ETR`，写成 `TIM2_CH1_ETR` 会失败 | 信号名一律以本机 `C:\ST\STM32CubeMX\db\mcu\STM32G474V(B-C-E)Tx.xml` 为准，先查库 |
 | D5 | CubeMX 对 `.ioc` 的错误是**非致命**的 | 信号名写错时只在日志里留一行 `(OptionalMessage_ERROR) Cannot map signal ...`，`project generate` 依然返回成功，外设被静默丢弃 | 改过 `.ioc` 后**必须**核验：①日志有无 `Cannot map`；②生成的 `main.c` 里有没有对应的 `MX_xxx_Init` |
-| D6 | `Drivers/` 被 git 忽略 | `Drivers/**` + `!Drivers/**/.gitkeep` | 新克隆的仓库里 `Drivers/` 只有 `.gitkeep`，这是**预期**的：HAL/CMSIS 由 PlatformIO framework 提供 |
+| D6 | `Drivers/` 被 git 忽略 | `/Drivers/**` + 逐级放行 `Drivers/CMSIS/`、`Drivers/STM32G4xx_HAL_Driver/` 及其 `.gitkeep` | 新克隆的仓库里 `Drivers/` 只有 `.gitkeep`，这是**预期**的：HAL/CMSIS 由 PlatformIO framework 提供。注意 git 不能 re-include 被排除目录下的文件，加新占位目录时要同时放行目录本身 |
 | D7 | `ProjectManager.AskForMigrate` 被写回 `true` | 模板里提交为 `false`，但 CubeMX 每次生成/保存都会改回 `true` | 无头生成前若卡住，先把它改回 `false`；见 `docs/TOOLING-cubemx.md` §3 |
 | D8 | G474 最小工程也会有一条 `VP_RIF_VS_RIF1` 诊断 | 即使一个外设都不加，`project generate` 仍打印 `(OptionalMessage_ERROR) Pin5 (VP_RIF_VS_RIF1) cannot be retrieved for this MCU` | 与本工程引脚无关，属 CubeMX 6.18.1 的 G4 数据库噪音；只要没有 `Cannot map` 且 `MX_xxx_Init` 齐全即可，不必删外设去"修"它 |
 | D9 | CubeMX 重复生成会把 `syscalls.c` / `sysmem.c` 写成叠加路径 | 日志报 `FileNotFoundException: <工程目录>\D:\...\Core\Src\syscalls.c`，这两个文件不会更新 | 这两份是标准的 newlib 桩，改动很少；若需要更新，从 CubeMX 的 `FW_G4` 模板目录复制，或先删除再生成 |

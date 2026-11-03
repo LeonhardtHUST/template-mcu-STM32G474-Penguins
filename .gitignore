@@ -23,8 +23,13 @@ build/
 
 # STM32CubeMX 生成的库 / Makefile / 启动文件 / 链接脚本 / 备份
 # HAL、CMSIS、启动文件、链接脚本由 PlatformIO framework 与 tool-ldscripts 提供，故不提交：
-Drivers/**
-!Drivers/**/.gitkeep
+# 只保留两个空目录占位（.gitkeep）。注意 git 无法 re-include 被排除目录下的文件，
+# 所以必须逐级放行目录，不能只写 !Drivers/**/.gitkeep。
+/Drivers/**
+!/Drivers/CMSIS/
+!/Drivers/CMSIS/.gitkeep
+!/Drivers/STM32G4xx_HAL_Driver/
+!/Drivers/STM32G4xx_HAL_Driver/.gitkeep
 Makefile
 STM32G474xx_FLASH.ld
 startup_stm32g474xx.s
